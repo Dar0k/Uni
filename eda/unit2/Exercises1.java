@@ -24,7 +24,7 @@ public class Exercises1 {
 
     if(v[m] > 0)
     {
-      return firstWhole(v, i, m);
+      return firstWhole(v, i, m-1);
     }
     if(v[m] <= 0)
     {
@@ -32,7 +32,7 @@ public class Exercises1 {
       {
         return m;
       }
-      return firstWhole(v,m,f);
+      return firstWhole(v,m+1,f);
     }
   }
 
@@ -57,10 +57,10 @@ Design the best recursive method that computes k and analyse its cost
       {
         return m;
       }
-      return concaveMin(v,m,f);
+      return concaveMin(v,m+1,f);
     }
 
-    return concaveMin(v,i,m);
+    return concaveMin(v,i,m-1);
   }
 
   /*
@@ -96,7 +96,7 @@ Design the best recursive method that computes k and analyse its cost
     }
     else if (m < v[m])
     {
-      return sameValueIndex(v, m, f);
+      return sameValueIndex(v, m+1, f);
     }
     /*If the middle point is greater than m we cannot assume there is not such
      element at the right or left of the array*/
@@ -104,7 +104,7 @@ Design the best recursive method that computes k and analyse its cost
 
     if(temp == -1) //If there is not such element it checks on the right part
     {
-      return sameValueIndex(v,m,f);
+      return sameValueIndex(v,m+1,f);
     }
     else //If there is it returns it
     {
@@ -133,12 +133,12 @@ Design the best recursive method that computes k and analyse its cost
 
     if(x.compareTo(v[m]) < 0)
     {
-      return areConsecutive(v,x,y,i,m);
+      return areConsecutive(v,x,y,i,m-1);
     }
 
     else if(x.comapareTo(v[m]) > 0)
     {
-      return areConsecutive(v,x,y,i,m);
+      return areConsecutive(v,x,y,m+1,f);
     }
 
     else
