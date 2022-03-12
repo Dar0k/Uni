@@ -11,7 +11,7 @@ import librerias.estructurasDeDatos.deDispersion.*;
 import java.util.Locale;
 import java.util.Scanner;
 
-public class Test1Map {
+public class Test3Map {
 
     public static void main(String[] args) {
 
@@ -26,27 +26,41 @@ public class Test1Map {
         System.out.println("Escriba palabras separadas por blancos:");
         String texto = teclado.nextLine();
 
-        // Creacion del Map vacio ...
-        // ?Que Clave y Valor tiene cada Entrada de este Map?
-		// ?De que tipos son?
+
         Map<String, String> m = new TablaHash<String, String>(texto.length());
+        Map<String, Integer> m2 = new TablaHash<String, Integer>(texto.length()/2);
 
         // Construcci�n del Map, via insercion/actualizacion de sus Entradas,
         // a partir de la frase leida:
         // uso del m�todo split de String con separador " " (uno o mas)
         String[] palabrasDelTexto = texto.split(" +");
+        int temp;
         for (int i = 0; i < palabrasDelTexto.length; i++)
             // OJO: LO M�S BARATO SERIA
-		    // d.insertar(palabrasDelTexto[i].toLowerCase(),
-		    // palabrasDelTexto[i].toLowerCase());
+        // d.insertar(palabrasDelTexto[i].toLowerCase(),
+        // palabrasDelTexto[i].toLowerCase());
+          {
+            String clave = palabrasDelTexto[i].toLowerCase();
+            if(m.recuperar(clave) == null)
+            {
+              m.insertar(clave, "");
 
-          m.insertar(palabrasDelTexto[i].toLowerCase(), "");
-
+            }
+            else
+            {
+              if(m2.recuperar(clave) == null)
+              {
+                m2.insertar(clave, 2);
+              }
+              else{
+                m2.insertar(clave, m2.recuperar(clave)+1);
+              }
+            }
+          }
 
         // OJO: nos piden mostrar las palabras distintas que aparecen,
         // que NO son las Entradas del Map sino SOLO sus claves
-        ListaConPI<String> deClaves = m.claves();
-        System.out.println("Palabras distintas que aparecen en el texto, "
-			+ "i.e. Claves del Map:\n" + deClaves);
-    }
+
+        System.out.println(m2);
+        }
 }
