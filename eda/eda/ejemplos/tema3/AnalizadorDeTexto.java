@@ -1,36 +1,61 @@
 package ejemplos.tema3;
 
-import librerias.estructurasDeDatos.modelos.*; 
-import librerias.estructurasDeDatos.deDispersion.*; 
+import librerias.estructurasDeDatos.modelos.*;
+import librerias.estructurasDeDatos.deDispersion.*;
+import java.util.Scanner;
 
 public class AnalizadorDeTexto {
 
     protected Map<String, Integer> m;
-    
-    /** construye un Analizador del Texto t, considerando que   
+
+    /** construye un Analizador del Texto t, considerando que
      *  el separador de sus palabras es el espacio en blanco
      */
     public AnalizadorDeTexto(String t) {
         String[] palabras = t.split(" +");
         m = new TablaHash<String, Integer>(palabras.length);
-        for (int i = 0; i < palabras.length; i++) { 
+        for (int i = 0; i < palabras.length; i++) {
             String pal = palabras[i].toLowerCase();
-            Integer frec = m.recuperar(pal); 
+            Integer frec = m.recuperar(pal);
             if (frec != null) {
                frec++;
-               m.insertar(pal, frec); 
+               m.insertar(pal, frec);
             }
             else { m.insertar(pal, 1); }
         }
     }
-    
-    /** devuelve el nº de palabras con frecuencia de aparición mayor   
-     *  que n que aparecen en el texto tratado por un Analizador.   
-     *  Así, por ejemplo, si n=0 devuelve el número de palabras distintas  
-     *  que aparecen en el texto; si n=1 devuelve el número de palabras  
+
+    /** devuelve el nï¿½ de palabras con frecuencia de apariciï¿½n mayor
+     *  que n que aparecen en el texto tratado por un Analizador.
+     *  Asï¿½, por ejemplo, si n=0 devuelve el nï¿½mero de palabras distintas
+     *  que aparecen en el texto; si n=1 devuelve el nï¿½mero de palabras
      *  repetidas que tiene el texto, etc.
      */
     public int frecuenciaMayorQue(int n) {
-        // COMPLETAR 
-    }  
+        // COMPLETAR
+        int frecuencia  = 0;
+        ListaConPI<String> deClaves = m.claves();
+        deClaves.inicio();
+        while(!deClaves.esFin())
+        {
+          if(m.recuperar(deClaves.recuperar()) > n)
+          {
+            frecuencia++;
+          }
+          deClaves.siguiente();
+        }
+        return frecuencia;
+    }
+
+    public static void main(String[] args) {
+      Scanner teclado = new Scanner(System.in);
+      System.out.println("Escriba palabras separadas por blancos:");
+      String texto = teclado.nextLine();
+
+      AnalizadorDeTexto adt = new AnalizadorDeTexto(texto);
+      System.out.println("Escriba frecuencia:");
+      int frec = teclado.nextInt();
+      System.out.println(adt.frecuenciaMayorQue(frec));
+
+    }
 }
